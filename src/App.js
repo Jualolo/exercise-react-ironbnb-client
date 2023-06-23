@@ -16,30 +16,29 @@ function App() {
 
  const [apartmentsArr, setApartmentsArr] = useState(null)
 
- useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/apartments`)
-      .then((response) => {
-        // console.log(response.data);
-        setApartmentsArr(response.data)
-      })
-      .catch(e => console.log(e))
-    }, [])
-    // console.log(apartmentsArr);
 
-    const renderListOfApartments = () => {
-      if(apartmentsArr === null) {
-        <p>Loading...</p>
-      } else {
-        apartmentsArr.map((apartmentObj) => {
-          return(
-            <div key={apartmentObj._id}>
-              <p>{apartmentObj.title}</p>
-            </div>
-          )
-        })
-      }
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/apartments`)
+      .then((response) => {
+        setApartmentsArr(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const renderListOfApartments = () => {
+    if (apartmentsArr === null) {
+      return <p>Loading...</p>;
+    } else {
+      return apartmentsArr.map((apartmentObj) => (
+        <div key={apartmentObj._id}>
+          {apartmentObj.title}
+        </div>
+      ));
     }
-  
+  };
     
 
   return (
