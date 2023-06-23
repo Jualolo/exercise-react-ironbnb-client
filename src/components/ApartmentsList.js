@@ -5,10 +5,7 @@ function ApartmentsList(props) {
             <h1>
                 ApartmentsList
             </h1>
-            <p>
-                {props.callbackToApartmentList()}
-            </p>
-
+            {props.callbackToApartmentList()}
         </div>
     )
 }
