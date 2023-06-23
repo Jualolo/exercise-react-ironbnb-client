@@ -2,7 +2,7 @@ import ironhackersImg from "./assets/ironhackers.avif"
 import './App.css';
 
 import { useEffect } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import { useState } from 'react';
 import { Route, Routes, NavLink, Link } from 'react-router-dom';
 
@@ -13,6 +13,35 @@ import ApartmentDetails from './components/ApartmentDetails';
 import CreateApartment from './components/CreateApartment'
 
 function App() {
+
+ const [apartmentsArr, setApartmentsArr] = useState(null)
+
+ useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/apartments`)
+      .then((response) => {
+        // console.log(response.data);
+        setApartmentsArr(response.data)
+      })
+      .catch(e => console.log(e))
+    }, [])
+    // console.log(apartmentsArr);
+
+    const renderListOfApartments = () => {
+      if(apartmentsArr === null) {
+        <p>Loading...</p>
+      } else {
+        apartmentsArr.map((apartmentObj) => {
+          return(
+            <div key={apartmentObj._id}>
+              <p>{apartmentObj.title}</p>
+            </div>
+          )
+        })
+      }
+    }
+  
+    
+
   return (
     <div className="App">
       {/* <h1>Welcome</h1>
@@ -25,7 +54,7 @@ function App() {
 
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/apartments' element={<ApartmentsList />} />
+        <Route path='/apartments' element={<ApartmentsList callbackToApartmentList={renderListOfApartments}/>} />
         <Route path="/apartments/:apartmentId" element={<ApartmentDetails />} />
         <Route path='/create' element={<CreateApartment/>} />
       </Routes>

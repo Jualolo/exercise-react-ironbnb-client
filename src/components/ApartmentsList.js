@@ -1,8 +1,15 @@
 function ApartmentsList(props) {
+    console.log(props.callbackToApartmentList);
     return(
-        <h1>
-            ApartmentsList
-        </h1>
+        <div>
+            <h1>
+                ApartmentsList
+            </h1>
+            <p>
+                {props.callbackToApartmentList}
+            </p>
+
+        </div>
     )
 }
 
